@@ -378,7 +378,7 @@ function AdminEventEditFormController($rootScope, $scope, $location, $filter, $r
 
   // decides whether field options block will be shown (true for dropdown and radio fields)
   $scope.showAddOptions = function(field) {
-    return field.type === "radio" || field.type === "dropdown";
+    return field.type === 'radio' || field.type === 'dropdown'  || field.type === 'multiselectdropdown';
   };
 
   $scope.hideAddOptions = function(field) {

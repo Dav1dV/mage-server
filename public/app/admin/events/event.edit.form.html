@@ -199,6 +199,17 @@
                   </div>
                 </div>
 
+                <div class="row" ng-if="newField.type === 'dropdown' || isUserDropdown(newField)">
+                  <div class="col-md-6">
+                    <div class="checkbox">
+                      <label>
+                        <input ng-model="newField.multiselect" type="checkbox" ng-checked="newField.multiselect == true"/> Multiselect
+                      </label>
+                      <p class="help-block">Choose multiselect if you would like users to be able to select more than one choice.</p>
+                    </div>
+                  </div>
+                </div>
+
                 <div class="row" ng-if="newField.type !== 'checkbox' && newField.type !== 'numberfield'">
                   <div class="col-md-6">
                     <div class="form-group" ng-hide="hideAddOptions(newField)">
