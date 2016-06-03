@@ -51,8 +51,7 @@
                         <div class="form-group">
                           <label>Type</label>
                           <input type="text" value="{{getTypeValue(field)}}" class="form-control" disabled>
-                          <p class="help-block" ng-if="isMemberField(field)">The 'User Dropdown' type is a dynamic list of all users that are part of the event.  As such you cannot add/remove options from this dropdown, users will be automatically populated.</p>
-
+                          <p class="help-block" ng-if="isMemberField(field)">The 'User Select' type is a dynamic list of all users that are part of the event.  As such you cannot add/remove choices, users will be automatically populated.</p>
                         </div>
                       </div>
                     </div>
@@ -68,9 +67,8 @@
                       <div class="col-md-6">
                         <div class="checkbox">
                           <label>
-                            <input ng-model="field.multiselect" type="checkbox" ng-checked="field.multiselect == true"/> Multiselect
+                            <input disabled ng-model="field.multiselect" type="checkbox" ng-checked="field.multiselect == true"/> <span class="muted">Multiselect<span>
                           </label>
-                          <p class="help-block">Choose multiselect if you would like users to be able to select more than one choice.</p>
                         </div>
                       </div>
                     </div>
@@ -83,7 +81,7 @@
                       </div>
                     </div>
                     <div class="row" ng-show="showAddOptions(field) && !isMemberField(field)">
-                      <div class="col-md-6" ng-if="!field.multiselect">
+                      <div class="col-md-6" ng-if="field.type === dropdown">
                         <div class="form-group">
                           <label>Default Value</label>
                           <select ng-model="field.value" ng-options="choice.title as choice.title for choice in field.choices" class="form-control">
@@ -92,7 +90,7 @@
                         </div>
                       </div>
 
-                      <div class="col-md-6" ng-if="field.multiselect">
+                      <div class="col-md-6" ng-if="field.type === multiselectdropdown">
                         <div class="form-group">
                           <label>Default Value</label>
                           <ui-select multiple ng-model="field.value" theme="bootstrap">
@@ -103,6 +101,7 @@
                           </ui-select>
                         </div>
                       </div>
+
                     </div>
                     <div class="row" ng-if="field.type === 'numberfield'">
                       <div class="col-md-6">
@@ -186,7 +185,7 @@
                   <div class="col-md-6">
                     <div class="form-group">
                       <label>Type</label>
-                      <select ng-model="newField.type" ng-options="name as value for (name, value) in fieldTypes" class="form-control"></select>
+                      <select ng-model="newField.type" ng-options="type.name as type.title for type in fieldTypes | filter: {hidden: '!'}" class="form-control"></select>
                       <p class="help-block" ng-if="isUserDropdown(newField)">The 'User Dropdown' type is a dynamic list of all users that are part of the event.  As such you cannot add/remove options from this dropdown, users will be automatically populated.</p>
                     </div>
                   </div>
@@ -196,17 +195,6 @@
                     <div class="form-group">
                       <label>Title</label>
                       <input type="text" ng-model="newField.title" value="{{newField.title}}" class="form-control">
-                    </div>
-                  </div>
-                </div>
-
-                <div class="row" ng-if="newField.type === 'dropdown' || isUserDropdown(newField)">
-                  <div class="col-md-6">
-                    <div class="checkbox">
-                      <label>
-                        <input ng-model="newField.multiselect" type="checkbox" ng-checked="newField.multiselect == true"/> Multiselect
-                      </label>
-                      <p class="help-block">Choose multiselect if you would like users to be able to select more than one choice.</p>
                     </div>
                   </div>
                 </div>

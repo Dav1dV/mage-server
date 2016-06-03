@@ -45,20 +45,53 @@ function AdminEventEditFormController($rootScope, $scope, $location, $filter, $r
 
   $scope.fileUploadOptions = {};
 
-  $scope.fieldTypes = {
-    textfield : 'Textfield',
-    numberfield: 'Numberfield',
-    email : 'E-mail',
-    password : 'Password',
-    radio : 'Radio Buttons',
-    dropdown : 'Dropdown',
-    userDropdown: 'User Dropdown',
-    date : 'Date',
-    geometry : 'Geometry',
-    textarea : 'Text Area',
-    checkbox : 'Checkbox',
-    hidden : 'Hidden'
-  };
+  $scope.fieldTypes = [{
+    name: 'checkbox',
+    title: 'Checkbox'
+  },{
+    name: 'date',
+    title: 'Date'
+  },{
+    name: 'email',
+    title: 'Email'
+  },{
+    name: 'hidden',
+    title: 'Hidden'
+  },{
+    name: 'geometry',
+    title: 'Location'
+  },{
+    name: 'numberfield',
+    title: 'Number'
+  },{
+    name: 'password',
+    title: 'Password'
+  },{
+    name: 'radio',
+    title: 'Radio Buttons'
+  },{
+    name: 'dropdown',
+    title: 'Select'
+  },{
+    name: 'multiselectdropdown',
+    title: 'Multiple Select',
+    hidden: true
+  },{
+    name: 'textfield',
+    title: 'Text'
+  },{
+    name: 'textarea',
+    title: 'Text Area'
+  },{
+    name: 'userDropdown',
+    title: 'User Select'
+  },{
+    name: 'multiSelectUserDropdown',
+    title: 'User Multiple Select',
+    hidden: true
+  }];
+
+  var fieldNameMap = _.indexBy($scope.fieldTypes, 'name');
 
   $scope.newField = newField();
 
@@ -82,11 +115,11 @@ function AdminEventEditFormController($rootScope, $scope, $location, $filter, $r
   };
 
   $scope.getTypeValue = function(field) {
-    if (field.type === 'dropdown' && $scope.isMemberField(field)) {
-      return $scope.fieldTypes.userDropdown;
+    if ($scope.isMemberField(field)) {
+      return field.type === 'dropdown' ? fieldNameMap.userDropdown : fieldNameMap.multiSelectUserDropdown;
     }
 
-    return $scope.fieldTypes[field.type];
+    return fieldNameMap[field.type].title;
   };
 
   // create new field button click
@@ -100,6 +133,10 @@ function AdminEventEditFormController($rootScope, $scope, $location, $filter, $r
     if ($scope.newField.type === 'userDropdown') {
       $scope.event.form.userFields.push($scope.newField.name);
       $scope.newField.type = 'dropdown';
+    }
+
+    if ($scope.newField.type === 'dropdown' && $scope.newField.multiselect) {
+      $scope.newField.type = 'multiselectdropdown';
     }
 
     $scope.onRequiredChanged($scope.newField);
