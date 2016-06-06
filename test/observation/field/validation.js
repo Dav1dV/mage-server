@@ -399,7 +399,7 @@ it("should throw validation error for invalid multiselectdropdown type", functio
   expect(field.validate.bind(field)).to.throw(Error);
 });
 
-it.only("should throw validation error for invalid multiselectdropdown choice", function() {
+it("should throw validation error for invalid multiselectdropdown choice", function() {
   var definition = {
     name: 'test',
     title: 'test',
