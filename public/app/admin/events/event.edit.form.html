@@ -63,15 +63,6 @@
                         </div>
                       </div>
                     </div>
-                    <div class="row" ng-if="field.type === 'dropdown' || isMemberField(field)">
-                      <div class="col-md-6">
-                        <div class="checkbox">
-                          <label>
-                            <input disabled ng-model="field.multiselect" type="checkbox" ng-checked="field.multiselect == true"/> <span class="muted">Multiselect<span>
-                          </label>
-                        </div>
-                      </div>
-                    </div>
                     <div class="row" ng-hide="showAddOptions(field) || field.type === 'numberfield' || field.type === 'checkbox'">
                       <div class="col-md-6">
                         <div class="form-group">
@@ -186,7 +177,7 @@
                     <div class="form-group">
                       <label>Type</label>
                       <select ng-model="newField.type" ng-options="type.name as type.title for type in fieldTypes | filter: {hidden: '!'}" class="form-control"></select>
-                      <p class="help-block" ng-if="isUserDropdown(newField)">The 'User Dropdown' type is a dynamic list of all users that are part of the event.  As such you cannot add/remove options from this dropdown, users will be automatically populated.</p>
+                      <p class="help-block" ng-if="isUserDropdown(newField)">The 'User Select' type is a dynamic list of all users that are part of the event.  As such you cannot add/remove options from this list, users will be automatically populated.</p>
                     </div>
                   </div>
                 </div>

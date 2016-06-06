@@ -1,25 +1,29 @@
 var util = require('util')
   , Field = require('./field');
 
-function ComboField(fieldDefinition, observation) {
-  ComboField.super_.call(this, fieldDefinition, observation.properties[fieldDefinition.name]);
+function MultiSelectField(fieldDefinition, observation) {
+  MultiSelectField.super_.call(this, fieldDefinition, observation.properties[fieldDefinition.name]);
 }
-util.inherits(ComboField, Field);
+util.inherits(MultiSelectField, Field);
 
-ComboField.prototype.validate = function() {
-  ComboField.super_.prototype.validate.call(this);
+MultiSelectField.prototype.validate = function() {
+  MultiSelectField.super_.prototype.validate.call(this);
+  
+  if (!this.value) return;
 
-  // TODO check for instance of array
-  // if (!this.value.trim()) return;
+  if (!Array.isArray(this.value)) {
+    throw new Error("cannot create observation, '" + this.definition.title + "' property must be an array");
+  }
 
-  // TODO make sure each choice is valid
-  // var choices = this.definition.choices.filter(function(choice) {
-  //   return choice.title === this.value;
-  // }, this);
-  //
-  // if (choices.length === 0) {
-  //   throw new Error("cannot create observation, '" + this.definition.title + "' property must be one of '" + this.definition.choices + "'");
-  // }
+  this.value.forEach(function(choice) {
+    var choices = this.definition.choices.filter(function(c) {
+      return c.title === choice;
+    }, this);
+
+    if (choices.length === 0) {
+      throw new Error("cannot create observation, '" + this.definition.title + "' property must be one of '" + this.definition.choices + "'");
+    }
+  }, this);
 };
 
-module.exports = ComboField;
+module.exports = MultiSelectField;
