@@ -100,8 +100,7 @@ function AdminEventEditFormController($rootScope, $scope, $location, $filter, $r
       title : "New field",
       type : 'textfield',
       required : false,
-      choices: [],
-      selectedChoices: {}
+      choices: []
     };
   }
 
