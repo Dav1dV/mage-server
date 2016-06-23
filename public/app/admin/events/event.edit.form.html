@@ -72,7 +72,7 @@
                       </div>
                     </div>
                     <div class="row" ng-show="showAddOptions(field) && !isMemberField(field)">
-                      <div class="col-md-6" ng-if="field.type === dropdown">
+                      <div class="col-md-6" ng-if="field.type === 'dropdown'">
                         <div class="form-group">
                           <label>Default Value</label>
                           <select ng-model="field.value" ng-options="choice.title as choice.title for choice in field.choices" class="form-control">
@@ -81,7 +81,7 @@
                         </div>
                       </div>
 
-                      <div class="col-md-6" ng-if="field.type === multiselectdropdown">
+                      <div class="col-md-6" ng-if="field.type === 'multiselectdropdown'">
                         <div class="form-group">
                           <label>Default Value</label>
                           <ui-select multiple ng-model="field.value" theme="bootstrap">
